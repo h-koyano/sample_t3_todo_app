@@ -14,7 +14,6 @@ export const useMutateTask = () => {
       reset();
     },
   });
-  return {};
 
   const updateTaskMutation = trpc.todo.updateTask.useMutation({
     onSuccess: (res) => {
