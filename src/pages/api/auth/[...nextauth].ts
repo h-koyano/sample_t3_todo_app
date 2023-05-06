@@ -9,7 +9,7 @@ export const authOptions: NextAuthOptions = {
   // Include user.id on session
   callbacks: {
     session({ session, token }) {
-      if (session.user !== null && token.sub !== null) {
+      if (session.user != null && token.sub != null) {
         session.user.id = token.sub;
       }
       return session;
@@ -27,11 +27,13 @@ export const authOptions: NextAuthOptions = {
         password: { label: "パスワード", type: "password" },
       },
       async authorize(credentials, req) {
+        const email = credentials?.email;
+        const password = credentials?.password || "";
         const user = await prisma.user.findUnique({
-          where: { email: credentials?.email },
+          where: { email },
         });
         if (!user) return null;
-        if (bcrypt.compareSync(credentials?.password, user.crypted_password)) {
+        if (bcrypt.compareSync(password, user.crypted_password || "")) {
           return user;
         } else {
           return null;

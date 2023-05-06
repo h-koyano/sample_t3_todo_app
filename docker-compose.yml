@@ -31,6 +31,7 @@ services:
     image: mailhog/mailhog
     container_name: sample_t3_todo_mail
     ports:
+      - 1025:1025
       - 8025:8025
     volumes:
       - sample_t3_todo_mail_data:/tmp
