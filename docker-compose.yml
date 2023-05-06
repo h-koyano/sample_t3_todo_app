@@ -41,4 +41,4 @@ services:
 volumes:
   sample_t3_todo_app:
   sample_t3_todo_db_data:
-  sample_t3_todo_mail_data: {}
+  sample_t3_todo_mail_data:
