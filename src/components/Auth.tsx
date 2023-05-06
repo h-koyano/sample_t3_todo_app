@@ -5,9 +5,9 @@ export const Auth = () => {
     <div>
       <button
         className="rounded bg-blue-600 px-4 py-2 font-bold text-white hover:bg-blue-800"
-        onClick={() => signIn("github")}
+        onClick={() => signIn()}
       >
-        GitHub Auth
+        サインイン
       </button>
     </div>
   );

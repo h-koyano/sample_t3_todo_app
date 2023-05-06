@@ -1,7 +1,6 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
-// Prisma adapter for NextAuth, optional and can be removed
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcrypt";
 
 import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db/client";
@@ -9,21 +8,36 @@ import { prisma } from "../../../server/db/client";
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
   callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
+    session({ session, token }) {
+      if (session.user !== null && token.sub !== null) {
+        session.user.id = token.sub;
       }
       return session;
     },
   },
-  // Configure one or more authentication providers
-  adapter: PrismaAdapter(prisma),
   providers: [
-    GitHubProvider({
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
+    CredentialsProvider({
+      name: "E-mail/Password",
+      credentials: {
+        email: {
+          label: "メールアドレス",
+          type: "email",
+          placeholder: "sample@example.com",
+        },
+        password: { label: "パスワード", type: "password" },
+      },
+      async authorize(credentials, req) {
+        const user = await prisma.user.findUnique({
+          where: { email: credentials?.email },
+        });
+        if (!user) return null;
+        if (bcrypt.compareSync(credentials?.password, user.crypted_password)) {
+          return user;
+        } else {
+          return null;
+        }
+      },
     }),
-    // ...add more providers here
   ],
 };
 
