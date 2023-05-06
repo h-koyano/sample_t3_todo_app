@@ -1,0 +1,46 @@
+{
+  "name": "sample_t3_todo_app",
+  "dockerComposeFile": [
+    "../docker-compose.yml",
+  ],
+  "service": "app",
+  "workspaceFolder": "/app",
+  "extensions": [
+    // Docker
+    "ms-azuretools.vscode-docker",
+    // ESLint
+    "dbaeumer.vscode-eslint",
+    // Stylelint
+    "stylelint.vscode-stylelint",
+    // Prettier - Code formatter
+    "esbenp.prettier-vscode",
+    // Path Intellisense
+    "christian-kohler.path-intellisense",
+    // indent-rainbow
+    "oderwat.indent-rainbow",
+    // Auto Rename Tag
+    "formulahendry.auto-rename-tag",
+    // vscode-icons
+    "vscode-icons-team.vscode-icons",
+    // JSON to TS
+    "MariusAlchimavicius.json-to-ts",
+    // Live Server
+    "ritwickdey.LiveServer",
+    // IntelliCode
+    "VisualStudioExptTeam.vscodeintellicode",
+    // GitLens — Git supercharged
+    "eamodio.gitlens",
+    // Tailwind CSS IntelliSense
+    "bradlc.vscode-tailwindcss",
+    // JavaScript (ES6) code snippets
+    "xabikos.JavaScriptSnippets",
+    // ES7 React/Redux/GraphQL/React-Native snippets
+    "dsznajder.es7-react-js-snippets",
+    // next.js
+    "foxundermoon.next-js",
+    // Next.js snippets
+    "PulkitGangwar.nextjs-snippets",
+    // Prisma
+    "Prisma.prisma",
+  ],
+}

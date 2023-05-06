@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  app:
+    container_name: sample_t3_todo_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - sample_t3_todo_app:/app/node_modules
+      - ./:/app:cached
+  db:
+    platform: linux/amd64
+    image: mysql:8.0
+    container_name: sample_t3_todo_db
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: rootsecret
+      MYSQL_DATABASE: sample
+      MYSQL_USER: app
+      MYSQL_PASSWORD: secret
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - sample_t3_todo_db_data:/var/lib/mysql
+      - ./db/init_scripts:/docker-entrypoint-initdb.d
+  # ローカルでのメール確認用
+  mail:
+    image: mailhog/mailhog
+    container_name: sample_t3_todo_mail
+    ports:
+      - 8025:8025
+    volumes:
+      - sample_t3_todo_mail_data:/tmp
+    environment:
+      MH_STORAGE: maildir
+      MH_MAILDIR_PATH: /tmp
+
+volumes:
+  sample_t3_todo_app:
+  sample_t3_todo_db_data:
+  sample_t3_todo_mail_data: {}
